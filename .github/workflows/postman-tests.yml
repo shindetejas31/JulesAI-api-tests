@@ -40,8 +40,18 @@ jobs:
         run: |
           ls -l  # This will list the files and verify the HTML report exists
 
+      - name: Check if report exists
+        id: check_report
+        run: |
+          if test -f "newman-report.html"; then
+            echo "Report exists"
+            echo "report_exists=true" >> $GITHUB_ENV
+          else
+            echo "Report does not exist"
+            echo "report_exists=false" >> $GITHUB_ENV
+
       - name: Upload HTML Report to GitHub
-        if: success() && fileExists('newman-report.html')  # Check if the report exists
+        if: env.report_exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: postman-html-report
