@@ -3,8 +3,8 @@ name: Run Postman Tests
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:  # Optional manual trigger from GitHub UI
+      - master
+  workflow_dispatch:
 
 jobs:
   run-postman-tests:
@@ -30,7 +30,5 @@ jobs:
 
       - name: Run Postman Collection
         run: |
-          postman collection run "<your-collection-uid>" \
-            --environment "<your-environment-uid>" \
-            --integration-id "your-integration-id" \
-            --reporters cli
+          postman collection run "14532214-eccd0524-21fc-4a50-9bc0-e78542afc86f" \
+            --environment "14532214-dd17d846-483e-4875-bb10-9c6520745fff" \
