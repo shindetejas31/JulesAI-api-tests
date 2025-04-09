@@ -2,6 +2,7 @@ email,password,expectedStatus
 qa@julesai.com,Jay@2132001,200
 qa@julesai,Jay@2132001,200
 qa@julesai.com,wrongPassword,200
+dev123@julesai.com,Jay@2132001,200
 qajulesai.com,Jay@2132001,200
 ,Jay@2132001,200
 qa@julesai.com,,200
