@@ -32,7 +32,7 @@ jobs:
         run: |
           postman collection run "14532214-eccd0524-21fc-4a50-9bc0-e78542afc86f" \
             --environment "14532214-dd17d846-483e-4875-bb10-9c6520745fff" \
-            --data "postman-tests/login_test_data.csv" \
+            --iteration-data postman-tests/login_test_data.csv \
             --reporters cli,json \
             --reporter-json-export newman-report.json
 
