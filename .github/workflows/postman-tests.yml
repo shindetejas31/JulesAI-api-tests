@@ -33,14 +33,15 @@ jobs:
           postman collection run "14532214-eccd0524-21fc-4a50-9bc0-e78542afc86f" \
             --environment "14532214-dd17d846-483e-4875-bb10-9c6520745fff" \
             --iteration-data postman-tests/login_test_data.csv \
-            --reporters cli,json \
+            --reporters cli,json,html \
             --reporter-html-export newman-report.html
-
-      - name: List files to verify report generation
+          
+      - name: List files in current directory to verify report generation
         run: |
-          ls -l  # This will list the files and verify the HTML report exists
+          echo "Listing current directory files:"
+          ls -l
 
-      - name: Check if report exists
+      - name: Check if HTML report exists
         id: check_report
         run: |
           if test -f "newman-report.html"; then
