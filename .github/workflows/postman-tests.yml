@@ -37,7 +37,7 @@ jobs:
             --reporter-json-export newman-report.json
 
       - name: Upload Report to GitHub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: postman-report
           path: newman-report.json
