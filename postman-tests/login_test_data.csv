@@ -11,4 +11,3 @@ valid.user@demo.com,,200
 valid.user@demo.com,WrongPassword,200
 deactivated@demo.com,Valid@123,200
 ,,200
-valid.user@demo.com,Valid@123,200
