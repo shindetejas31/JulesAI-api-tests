@@ -2,35 +2,35 @@ name: Run Postman Tests
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  workflow_dispatch:  # Optional manual trigger from GitHub UI
 
 jobs:
   run-postman-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ⬇️ Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: 🛠️ Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: 📦 Install Newman
-      run: npm install -g newman
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
-    - name: 🚀 Run Postman Collection
-      run: |
-        newman run postman-tests/JulesAI_API\ _LoginTests.postman_collection.json `
-          -e postman-tests/JulesAI_BaseURL.postman_environment.json `
-          --reporters cli,html `
-          --reporter-html-export newman-report.html
+      - name: Authenticate Postman CLI
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        run: postman login --with-api-key $POSTMAN_API_KEY
 
-    - name: 📤 Upload HTML Report as Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: postman-report
-        path: newman-report.html
+      - name: Run Postman Collection
+        run: |
+          postman collection run "<your-collection-uid>" \
+            --environment "<your-environment-uid>" \
+            --integration-id "your-integration-id" \
+            --reporters cli
