@@ -1,0 +1,14 @@
+email,password,expectedStatus
+qa@julesai.com,Jay@2132001,200
+invalid.user@demo.com,Jay@2132001,200
+qa@julesai.com,wrongPassword,200
+invalid.user@demo.com,wrongPassword,200
+invalidemail.com,Valid@123,200
+,Valid@123,200
+valid.user@demo.com,,200
+' OR 1=1 --,any,200
+<script>alert(1)</script>,Valid@123,200
+valid.user@demo.com,WrongPassword,200
+deactivated@demo.com,Valid@123,200
+,,200
+valid.user@demo.com,Valid@123,200
