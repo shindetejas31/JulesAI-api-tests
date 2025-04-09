@@ -49,6 +49,7 @@ jobs:
           else
             echo "Report does not exist"
             echo "report_exists=false" >> $GITHUB_ENV
+          fi
 
       - name: Upload HTML Report to GitHub
         if: env.report_exists == 'true'
