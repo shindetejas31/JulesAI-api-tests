@@ -19,12 +19,16 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Newman
-        run: npm install -g newman
-
-      - name: Run Newman Collection
+      - name: Install Postman CLI
         run: |
-          newman run JulesAI_API_LoginTests.postman_collection.json \
-            -e JulesAI_BaseURL.postman_environment.json \
-            -d login_test_data.csv \
-            --insecure
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
+      - name: Authenticate Postman CLI
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        run: postman login --with-api-key $POSTMAN_API_KEY
+
+      - name: Run Postman Collection
+        run: |
+          postman collection run "14532214-eccd0524-21fc-4a50-9bc0-e78542afc86f" \
+            --environment "14532214-dd17d846-483e-4875-bb10-9c6520745fff" \
