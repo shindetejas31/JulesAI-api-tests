@@ -34,10 +34,10 @@ jobs:
             --environment "14532214-dd17d846-483e-4875-bb10-9c6520745fff" \
             --iteration-data postman-tests/login_test_data.csv \
             --reporters cli,json \
-            --reporter-json-export newman-report.json
+            --reporter-html-export newman-report.html
 
-      - name: Upload Report to GitHub
+      - name: Upload HTML Report to GitHub
         uses: actions/upload-artifact@v4
         with:
-          name: postman-report
-          path: newman-report.json
+          name: postman-html-report
+          path: newman-report.html
