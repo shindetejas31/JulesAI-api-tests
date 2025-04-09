@@ -36,7 +36,12 @@ jobs:
             --reporters cli,json \
             --reporter-html-export newman-report.html
 
+      - name: List files to verify report generation
+        run: |
+          ls -l  # This will list the files and verify the HTML report exists
+
       - name: Upload HTML Report to GitHub
+        if: success() && fileExists('newman-report.html')  # Check if the report exists
         uses: actions/upload-artifact@v4
         with:
           name: postman-html-report
