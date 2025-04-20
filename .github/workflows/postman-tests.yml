@@ -1,4 +1,4 @@
-name: Run Postman Tests from GitHub Files
+name: Run Postman Tests with Newman
 
 on:
   push:
@@ -11,51 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Step 1: Checkout the code from your GitHub repository
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # 🟢 Step 2: Setup Node.js (needed to install Newman/Postman CLI)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 🧰 Step 3: Install Postman CLI (Newman)
-      - name: Install Postman CLI
-        run: |
-          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Install Newman
+        run: npm install -g newman
 
-      # 🚀 Step 4: Run the collection using files from GitHub repo
-      - name: Run Postman Collection from GitHub files
+      - name: Run Postman collection with Newman
         run: |
-          postman collection run "postman-tests/login.postman_collection.json" \
-            --environment "postman-tests/env.json" \
-            --iteration-data "postman-tests/login_test_data.csv" \
-            --reporters cli,json,html \
-            --reporter-html-export "newman-report.html"
+          newman run postman-tests/JulesAI_API_LoginTests.postman_collection.json \
+            --environment postman-tests/JulesAI_BaseURL.postman_environment.json \
+            --iteration-data postman-tests/login_test_data.csv \
+            --reporters cli,html \
+            --reporter-html-export newman-report.html
 
-      # 📄 Step 5: List files to confirm report generation
-      - name: List files in current directory
-        run: |
-          echo "Listing files in the directory:"
-          ls -l
-
-      # ✅ Step 6: Check if the HTML report was generated
-      - name: Check if HTML report exists
-        id: check_report
-        run: |
-          if test -f "newman-report.html"; then
-            echo "Report exists"
-            echo "report_exists=true" >> $GITHUB_ENV
-          else
-            echo "Report does not exist"
-            echo "report_exists=false" >> $GITHUB_ENV
-          fi
-
-      # ☁️ Step 7: Upload the HTML report as an artifact in GitHub Actions
       - name: Upload HTML Report
-        if: env.report_exists == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: postman-html-report
